@@ -197,6 +197,111 @@ plt.ylabel("Population (thousands)")
 plt.legend()
 plt.show()
 
+#Q12.
+# Finding Roots of a Polynomial using SciPy
+import numpy as np
+from scipy import roots  # (we can also use numpy.roots directly)
+# Polynomial:  x³ - 6x² + 11x - 6 = 0
+# Coefficients in decreasing powers of x
+coeff = [1, -6, 11, -6]
+# Method 1: Using NumPy (simple)
+r = np.roots(coeff)
+print("Roots using NumPy:", r)
+# Method 2: Using SciPy (from scipy.optimize or poly1d)
+from scipy import poly1d
+p = poly1d(coeff)
+roots_scipy = p.r
+print("Roots using SciPy poly1d:", roots_scipy)
+
+#Q13.
+# Integration using SciPy
+import numpy as np
+from scipy import integrate
+#Define the function to integrate
+def f(x):
+    return x**2
+# Integrate f(x) from 0 to 3
+result, error = integrate.quad(f, 0, 3)
+print("Integration of x^2 from 0 to 3 = ", result)
+print("Estimated error =", error)
+
+# Q14 - Differentiation using SciPy
+import numpy as np
+from scipy.misc import derivative
+# Define the function
+def f(x):
+    return x**3 + 2*x**2 + 3*x + 4
+# Find derivative at x = 2
+x_val = 2
+result = derivative(f, x_val, dx=1e-6)
+print("Derivative of f(x) = x^3 + 2x^2 + 3x + 4 at x = 2 is:", result)
+
+# Q15: Damped Oscillator (θ'' + 0.2θ' + 4θ = 0)
+# Initial conditions: θ(0) = 1, θ'(0) = 0
+# Solve for t = 0 to 20 s using scipy.odeint
+import numpy as np
+from scipy.integrate import odeint
+import matplotlib.pyplot as plt
+# Equation parameters
+c = 0.2   # damping coefficient
+k = 4.0   # stiffness (ωn²)
+m = 1.0   # mass
+# Differential equation
+def dydt(y, t):
+    theta, omega = y
+    dtheta_dt = omega
+    domega_dt = -(c/m)*omega - (k/m)*theta
+    return [dtheta_dt, domega_dt]
+# Initial conditions
+y0 = [1.0, 0.0]
+# Time range
+t = np.linspace(0, 20, 2001)
+# Solve ODE
+sol = odeint(dydt, y0, t)
+theta = sol[:, 0]
+# Find maximum displacement and its time
+max_disp = np.max(theta)
+max_time = t[np.argmax(theta)]
+# Display results
+print(f"Equation: θ'' + {c}θ' + {k}θ = 0")
+print(f"Maximum displacement = {max_disp:.4f} rad at t = {max_time:.4f} s")
+# Plot
+plt.figure(figsize=(9, 4.5))
+plt.plot(t, theta, label="θ(t)")
+plt.title("Damped Oscillation of a System")
+plt.xlabel("Time (s)")
+plt.ylabel("Displacement θ (rad)")
+plt.grid(True)
+plt.legend()
+plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
